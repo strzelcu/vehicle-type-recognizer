@@ -24,23 +24,21 @@ if [[ ! -e ${logFile} ]]; then
 fi
 
 while [[ ${iteration} -le $3 ]]; do
-	lineNumber=1
+	imageNumber=1
 	echo "$(date ${datePattern}): Iteration $iteration has been started." >> ${logFile}
 	for line in ${listOfUrls}; do
 		url=${line}
 		request="$url"
 		response=$(curl -s "$url")
 		imageUrls=$(grep -oP 'http.?://\S+jpg' <<< "$response")
-		imageNumber=1
 		if [[ ! -d iteration${iteration} ]]; then
 			mkdir iteration${iteration}
 		fi
 		for line in ${imageUrls}; do
-			$(wget ${line} -O ./iteration${iteration}/it${iteration}-${lineNumber}-${imageNumber}.jpg)
+			$(wget ${line} -O ./iteration${iteration}/it${iteration}-${imageNumber}.jpg)
 			echo "$(date ${datePattern}): Image $line has been downloaded." >> ${logFile}
 			((imageNumber++))
 		done
-		((lineNumber++))
 	done
 	echo "$(date ${datePattern}): Iteration $iteration has been finished." >> ${logFile}
 	((iteration++))
