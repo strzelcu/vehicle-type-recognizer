@@ -15,8 +15,14 @@
 fileWithUrlList=$1
 listOfUrls=$(cat ${fileWithUrlList});
 iteration=$2
-logFile="run.log"
+targetDir="target"
+logFile="$targetDir/run.log"
 datePattern="+%F-%T.%N"
+
+# Create target directory
+if [[ ! -e ${targetDir} ]]; then
+    mkdir ${targetDir}
+fi
 
 # Create log file
 if [[ ! -e ${logFile} ]]; then
@@ -32,10 +38,10 @@ while [[ ${iteration} -le $3 ]]; do
 		response=$(curl -s "$url")
 		imageUrls=$(grep -oP 'http.?://\S+jpg' <<< "$response")
 		if [[ ! -d iteration${iteration} ]]; then
-			mkdir iteration${iteration}
+			mkdir -p ./target/iteration${iteration}
 		fi
 		for line in ${imageUrls}; do
-			$(wget ${line} -O ./iteration${iteration}/it${iteration}-${imageNumber}.jpg)
+			$(wget ${line} -O ./target/iteration${iteration}/it${iteration}-${imageNumber}.jpg)
 			echo "$(date ${datePattern}): Image $line has been downloaded." >> ${logFile}
 			((imageNumber++))
 		done

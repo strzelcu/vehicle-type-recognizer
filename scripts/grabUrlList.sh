@@ -8,8 +8,14 @@
 
 lowerLimit=$1;
 upperLimit=$2;
+targetDir="urls"
 url="https://www.traxelektronik.pl/pogoda/kamery/kamera.php?pkamnum=";
-grabbedUrlListFile="grabbedUrlList";
+grabbedUrlListFile="$targetDir/grabbedUrlList";
+
+# Create target directory
+if [[ ! -e ${targetDir} ]]; then
+    mkdir ${targetDir}
+fi
 
 for (( i=$lowerLimit; i<=$upperLimit; i++ )) do
 	request="$url$i";
