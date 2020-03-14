@@ -1,0 +1,16 @@
+# Development environment prerequisites:
+#
+# PyCharm IDE (Recommended)
+#   Plugins:
+#       * Requirements https://plugins.jetbrains.com/plugin/10837-requirements
+#       * Bash Support https://plugins.jetbrains.com/plugin/4230-bashsupport
+
+# Requirements
+
+## Image processing
+opencv-python==4.2.0.32
+numpy==1.18.1
+imutils==0.5.3
+
+## Neural networks libraries
+sklearn==0.0
