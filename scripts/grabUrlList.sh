@@ -17,11 +17,12 @@ if [[ ! -e ${targetDir} ]]; then
     mkdir ${targetDir}
 fi
 
-for (( i=$lowerLimit; i<=$upperLimit; i++ )) do
+for (( i = $lowerLimit ; i <= $upperLimit ; i++ )) do
 	request="$url$i";
 	response=$(curl -s "$url$i");
 	imageUrls=$(grep -oP 'http.?://\S+jpg' <<< "$response");
 	if [[ -n $imageUrls ]]; then
 		echo $request >> ${grabbedUrlListFile}
+		echo "Added request nr $i: $request"
 	fi
 done
