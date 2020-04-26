@@ -8,9 +8,9 @@
 # Requirements
 
 ## Image processing
-opencv-python==4.2.0.32
-numpy==1.18.1
+opencv-python==4.2.0.34
+numpy==1.18.3
 imutils==0.5.3
 
 ## Neural networks libraries
-sklearn==0.0
+scikit-learn==0.22.2.post1
