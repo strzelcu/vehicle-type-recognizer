@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 Tomasz Strzelecki
+Copyright (c) 2019-2020 Tomasz Strzelecki
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
