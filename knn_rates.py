@@ -5,9 +5,11 @@ import sys
 from configparser import RawConfigParser
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+import numpy as np
 from imutils import paths
-from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
@@ -23,6 +25,8 @@ ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 ap.add_argument("-k", "--neighbors", type=int, default=1, help="# of nearest neighbors for classification")
 ap.add_argument("-j", "--jobs", type=int, default=-1, help="# of jobs for k-NN distance (-1 uses all available cores)")
 args = vars(ap.parse_args())
+
+NEIGHBORS = args['neighbors']
 
 # Parse config file
 config = RawConfigParser()
@@ -58,11 +62,38 @@ labels = le.fit_transform(labels)
 (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.25, random_state=42)
 
 # Train and evaluate a k-NN classifier on the raw pixel intensities
-print("[INFO] evaluating k-NN classifier...")
-model = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
-model.fit(trainX, trainY)
-predY = model.predict(testX)
-print(classification_report(testY, predY, target_names=le.classes_))
-print(accuracy_score(testY, predY))
-print(confusion_matrix(testY, predY))
+print("[INFO] {} evaluating k-NN classifier for {} nearest neighbors...".format(datetime.datetime.now(), NEIGHBORS))
+
+error_rate = []
+score_rate = []
+for i in range(1, NEIGHBORS+1):
+    print("[INFO] {} Start of processing iteration {}".format(datetime.datetime.now(), i))
+    model = KNeighborsClassifier(n_neighbors=i, n_jobs=args["jobs"])
+    model.fit(trainX, trainY)
+    predY = model.predict(testX)
+    error_rate.append(np.mean(predY != testY))
+    score_rate.append(accuracy_score(testY, predY))
+    print(classification_report(testY, predY, target_names=le.classes_))
+    print(accuracy_score(testY, predY))
+    print(confusion_matrix(testY, predY))
+    print("[INFO] {} Finish of processing iteration {}".format(datetime.datetime.now(), i))
+
+plt.figure(figsize=(10, 6))
+plt.plot(range(0, NEIGHBORS), error_rate, color='blue', linestyle='dashed', marker='o',
+         markerfacecolor='red', markersize=10)
+plt.xticks(range(0, NEIGHBORS))
+plt.title('Error Rate vs. K Value')
+plt.xlabel('K')
+plt.ylabel('Error Rate')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+plt.plot(range(0, NEIGHBORS), score_rate, color='blue', linestyle='dashed', marker='o',
+         markerfacecolor='red', markersize=10)
+plt.xticks(range(0, NEIGHBORS))
+plt.title('Score Rate vs. K Value')
+plt.xlabel('K')
+plt.ylabel('Score Rate')
+plt.show()
+
 print("[INFO] Finish of processing at {}".format(datetime.datetime.now()))

@@ -54,7 +54,7 @@ def unify_images(path, class_name, size):
             print(error)
 
 
-# Construct the argument parse and parse the arguments
+# Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
 ap.add_argument("-c", "--class", required=True, help="image class name")
