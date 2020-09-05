@@ -5,10 +5,10 @@ import sys
 from configparser import RawConfigParser
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 from imutils import paths
 from sklearn.metrics import classification_report
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import plot_confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
@@ -36,7 +36,7 @@ verbose_checkpoint = int(config.get("ImageDatasetLoad", "image.verbose"))
 image_size = int(config.get("ImagePreprocess", "image.size"))
 
 # Grab the list of images that we'll be describing
-print("[INFO] Start of processing at {}".format(datetime.datetime.now()))
+print("[INFO] {} Start of processing".format(datetime.datetime.now()))
 print("[INFO] loading images...")
 imagePaths = list(paths.list_images(args["dataset"]))
 
@@ -49,6 +49,9 @@ data = data.reshape((data.shape[0], (image_size * image_size * 3)))
 # Show some information on memory consumption of the images
 print("[INFO] features matrix: {:.1f}MB".format(data.nbytes / (1024 * 1000.0)))
 
+# Prepare display labels for confusion matrix plot
+display_labels = list(dict.fromkeys(labels))
+
 # Encode the labels as integers
 le = LabelEncoder()
 labels = le.fit_transform(labels)
@@ -58,11 +61,14 @@ labels = le.fit_transform(labels)
 (trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.25, random_state=42)
 
 # Train and evaluate a k-NN classifier on the raw pixel intensities
-print("[INFO] evaluating k-NN classifier...")
+print("[INFO] {} evaluating k-NN classifier...".format(datetime.datetime.now()))
+
 model = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
 model.fit(trainX, trainY)
 predY = model.predict(testX)
 print(classification_report(testY, predY, target_names=le.classes_))
-print(accuracy_score(testY, predY))
-print(confusion_matrix(testY, predY))
-print("[INFO] Finish of processing at {}".format(datetime.datetime.now()))
+
+# Vizualize confusion matrix
+plot_confusion_matrix(model, testX, testY, display_labels=display_labels)
+plt.show()
+print("[INFO] {} Finish of processing".format(datetime.datetime.now()))
