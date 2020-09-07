@@ -5,8 +5,9 @@
 #       * Requirements https://plugins.jetbrains.com/plugin/10837-requirements
 #       * Bash Support https://plugins.jetbrains.com/plugin/4230-bashsupport
 
-# Requirements
+# Plots
 matplotlib==3.3.1
+scikit-plot==0.3.7
 
 ## Image processing
 opencv-python==4.4.0.42
