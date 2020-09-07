@@ -23,12 +23,10 @@ To the extent possible under law, I waived all copyright and related or neighbor
 
 [![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/) 
 
-## 4. Fourth stage - Implementation of neural network algorithms
+## 4. Fourth stage - Implementation of machine learning algorithms
 
-    * python knn.py --dataset resources/vehicles
+    // TODO
 
 ## FOOTNOTES
 
-1. Found image datasets corresponding to vehicle recognition
-
-    // TODO: Add all databases which you found
+    // TODO: Add found image datasets and other informations
