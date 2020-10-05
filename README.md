@@ -23,10 +23,20 @@ To the extent possible under law, I waived all copyright and related or neighbor
 
 [![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/) 
 
-## 4. Fourth stage - Implementation of machine learning algorithms
+## 4. Fourth stage - Running implemented algorithms
 
-    // TODO
+Check K nearest neighbours algorithm using command (*more description in code*):
 
-## FOOTNOTES
+    python knn.py -d dataset/vehicles-32px/
 
-    // TODO: Add found image datasets and other informations
+Check convolutional neural network implemented with Keras, using command (*more description in code*):
+
+    python keras.py -d dataset/vehicles-32px
+
+## 5. Found datasets:
+
+* [Public Transportation Datasets](https://www.polymtl.ca/wikitransport/index.php?title=Public_Transportation_Datasets) -  Wiki about Research in Intelligent Transportation and Road Safety at Montreal University of Technology containing links to road vehicle image datasets.
+* [MIOvision Traffic Camera Dataset](http://podoce.dinf.usherbrooke.ca/) - Large dataset from road cams located over the world.
+* [COD20K Dataset](https://www.fit.vutbr.cz/research/groups/graph/PoseEstimation/cod20k.html) - Vehicle image dataset prepared by Brno University of Technology.
+* [GTI Vehicle Image Database](https://www.gti.ssr.upm.es/data/Vehicle_database.html) - Vehicle image dataset prepared by GTI - Madrid University of Technology.
+* [The Comprehensive Cars](http://mmlab.ie.cuhk.edu.hk/datasets/comp_cars/index.html) - Vehicle image dataset prepared by University of Hong Kong.
